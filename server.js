@@ -8,6 +8,8 @@ app.use(express.json());
 app.use(cors());
 
 app.post("/proxy", async (req, res) => {
+    console.log("🔹 Запрос получен:", req.body);  // Логируем запросы
+
     try {
         const response = await axios.post(
             "https://api.openai.com/v1/chat/completions",
@@ -19,9 +21,12 @@ app.post("/proxy", async (req, res) => {
                 }
             }
         );
+
+        console.log("✅ Ответ от OpenAI:", response.data);
         res.json(response.data);
     } catch (error) {
-        res.status(500).json({ error: "Ошибка запроса к OpenAI" });
+        console.error("❌ Ошибка запроса к OpenAI:", error.response ? error.response.data : error.message);
+        res.status(500).json({ error: "Ошибка запроса к OpenAI", details: error.response ? error.response.data : error.message });
     }
 });
 
