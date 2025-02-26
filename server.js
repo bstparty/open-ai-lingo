@@ -14,7 +14,7 @@ app.post("/proxy", async (req, res) => {
             req.body,
             {
                 headers: {
-                    "Authorization": `Bearer ${process.env.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}`,
+                    "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
                     "Content-Type": "application/json"
                 }
             }
